@@ -1,6 +1,7 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:furniture_store/components/line.dart';
 import 'package:furniture_store/cubits/shop_login_cubit/shopLoginStates.dart';
 import 'package:furniture_store/layouts/shopLayout.dart';
 import 'package:furniture_store/modules/screens/registerScreen.dart';
@@ -141,29 +142,7 @@ class LoginScreen extends StatelessWidget {
 
                                 ],
                               ),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: Container(
-                                      height: 1,
-
-                                      color: Colors.blueGrey[50],
-                                    ),
-                                  ),
-                                  const Padding(
-                                    padding: EdgeInsets.symmetric(horizontal: 10.0),
-                                    child: Text('Or Continue with',style: TextStyle(fontSize: 10,color: Colors.blueGrey),),
-                                  ),
-                                  Expanded(
-                                    child: Container(
-                                      height: 1,
-
-                                      color: Colors.blueGrey[50],
-                                    ),
-                                  ),
-
-                                ],
-                              ),
+                              line(inlineText: 'Or Continue with'),
                               const SizedBox(height: 10,),
                               Container(
                                 width:180,

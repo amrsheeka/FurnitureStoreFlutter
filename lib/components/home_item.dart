@@ -15,7 +15,9 @@ Widget homeItem(
       required int index}) {
   return InkWell(
     onTap: () {
-      navigateTo(context: context, page: ProductScreen(data!, index));
+      cubit.getReviews(productId: data!.id).then((value) {
+        navigateTo(context: context, page: ProductScreen(data, index));
+      });
     },
     child: Card(
       //color: Colors.grey[100],
@@ -87,16 +89,16 @@ Widget homeItem(
                 Spacer(),
                 CircleAvatar(
                     radius: 23,
-                    backgroundColor: cubit.favorite['${data.id}'] == true
+                    backgroundColor: cubit.favorite[data.id] == true
                         ? mainColor
-                        : Colors.grey[200],
+                        : Colors.blueGrey[50],
                     child: IconButton(
                       icon: const Icon(
                         IconBroken.Heart,
                         size: 30,
                       ),
                       onPressed: () {
-                        cubit.toggleFavorite(id: '${data.id}');
+                        cubit.toggleFavorite(id: data.id);
                       },
                     )),
               ],

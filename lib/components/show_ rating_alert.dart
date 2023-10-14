@@ -70,7 +70,7 @@ Future<void> showRatingAlertDialog({
             actions: <Widget>[
               const Icon(Icons.star,size: 30,color: Colors.amber,),
               Text(
-                cubit.initialRate!.toStringAsFixed(1),
+                cubit.initialRate.toStringAsFixed(1),
                 style: const TextStyle(
                   fontSize: 18,
                 ),
@@ -95,5 +95,5 @@ Future<void> showRatingAlertDialog({
 
       );
     },
-  );;
+  );
 }

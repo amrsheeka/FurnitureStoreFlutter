@@ -40,7 +40,7 @@ class HomeScreen extends StatelessWidget {
                                   padding: EdgeInsetsDirectional.symmetric(horizontal: 30),
                                   height: 50,
                                   decoration: BoxDecoration(
-                                      color: Colors.grey[200],
+                                      color: Colors.blueGrey[50],
                                       borderRadius: BorderRadius.circular(20)
 
                                   ),
@@ -129,7 +129,7 @@ class HomeScreen extends StatelessWidget {
                     child: ListView.separated(
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) => categoriesItem(cubit: cubit, index: index,name: cubit.categories[index]),
-                        separatorBuilder: (context, index) => SizedBox(width: 10,),
+                        separatorBuilder: (context, index) => const SizedBox(width: 10,),
                         itemCount: cubit.categories.length
                     ),
                   ),

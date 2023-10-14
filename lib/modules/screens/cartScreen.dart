@@ -86,12 +86,18 @@ class CartScreen extends StatelessWidget {
                           Expanded(
                             child: Column(
                               children: [
-                                Text('Total Price',style: TextStyle(
-                                  color: Colors.grey,
+                                const Text('Total Price',style: TextStyle(
+                                  color: Colors.blueGrey,
                                 ),),
-                                Text('${cubit.totalPrice} EGP',style: TextStyle(
-                                  fontSize: 20
-                                ),)
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text('${cubit.totalPrice}',style: const TextStyle(
+                                      fontSize: 20,
+                                    ),),
+                                    Text(' \$',style: TextStyle(fontSize: 20,color: Colors.green),),
+                                  ],
+                                )
                               ],
                             ),
                           ),

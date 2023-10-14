@@ -322,7 +322,7 @@ class ShopCubit extends Cubit<ShopState> {
     await getMyProductReview(productId: productModel.id);
     if(oldDoc!=null){
       productModel.updateRate(oldRate: double.parse(oldDoc?['rate']),newRate: rate);
-      ReviewModel reviewModel = ReviewModel(uid!, product.id, rate, comment);
+      ReviewModel reviewModel = ReviewModel(uid!,user?.name, product.id, rate, comment);
       instance.collection('reviews').doc(oldDoc?.id).update(reviewModel.toJson()).then((value){
         emit(ShopUpdateReviewSuccessState());
         updateProductRate(productModel);
@@ -331,7 +331,7 @@ class ShopCubit extends Cubit<ShopState> {
       });
     }else{
       productModel.increaseRate(newRate: rate);
-      ReviewModel reviewModel = ReviewModel(uid!, product.id, rate, comment);
+      ReviewModel reviewModel = ReviewModel(uid!,user?.name, product.id, rate, comment);
       instance.collection('reviews').add(reviewModel.toJson()).then((value){
         emit(ShopAddReviewSuccessState());
         updateProductRate(productModel);
@@ -343,6 +343,7 @@ class ShopCubit extends Cubit<ShopState> {
   }
   Future<void> updateProductRate(ProductModel productModel)async{
     instance.collection('products').doc(productModel.id).update(productModel.toJson()).then((value){
+      getReviews(productId: productModel.id);
       emit(ShopAddReviewSuccessState());
     }).catchError((error){
       emit(ShopAddReviewErrorState(error: error));
