@@ -3,9 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:furniture_store/components/show_toast.dart';
+import 'package:furniture_store/cubits/connection_cubit/connection_cubit.dart';
 import 'package:furniture_store/cubits/shop_cubit/shopCubit.dart';
 import 'package:furniture_store/shared/constants.dart';
 import 'package:furniture_store/stripe_payment/stripe_keys.dart';
+import 'cubits/connection_cubit/connection_states.dart';
 import 'layouts/shopLayout.dart';
 import 'modules/screens/loginScreen.dart';
 import 'modules/screens/welcomScreen.dart';
@@ -28,7 +31,7 @@ class MyApp extends StatelessWidget {
   String? uid;
   bool? welcome;
   // const MyApp({Key? key}) : super(key: key);
-  MyApp({required this.welcome, required this.uid});
+  MyApp({Key? key, required this.welcome, required this.uid}) : super(key: key);
 
   // This widget is the root of your application.
   @override
@@ -41,24 +44,28 @@ class MyApp extends StatelessWidget {
     } else {
       initialScreen = ShopLayout();
     }
-    return BlocProvider(
-      create: (BuildContext context) => ShopCubit()
-        ..getData()
-        ..getSliders()
-        ..getCities()
-        ..getOrders(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (BuildContext context) => ShopCubit()
+            ..getData()
+            ..getSliders()
+            ..getCities()
+            ..getOrders(),
+        ),
+        BlocProvider(
+          create: (BuildContext context) => ConnectionCubit()..checkConnection()
+        ),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Shop Demo',
         theme: ThemeData(
           primarySwatch: Colors.deepPurple,
           scaffoldBackgroundColor: Colors.white,
-          //     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-          //       selectedItemColor: Colors.deepPurple,
-          //     ),
           fontFamily: 'Jannah',
           textTheme: const TextTheme(),
-          buttonTheme: ButtonThemeData(
+          buttonTheme: const ButtonThemeData(
             buttonColor: mainColor,
           ),
           appBarTheme: const AppBarTheme(
@@ -75,7 +82,17 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSwatch()
               .copyWith(primary: mainColor, secondary: mainColor),
         ),
-        home: initialScreen,
+        home: BlocConsumer<ConnectionCubit,ShopConnectionState>(
+          builder: (context, state) {
+            return initialScreen;
+          },
+          listener: (context, state) {
+            if(state is ConnectedState){
+            }else if(state is NotConnectedState){
+              showToast(message: 'No internet connection', type: ToastType.ERROR);
+            }
+          },
+        ),
       ),
     );
   }

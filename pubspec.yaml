@@ -49,6 +49,7 @@ dependencies:
   readmore: ^2.1.0
   flutter_stripe: ^9.3.0
   dio: ^5.3.2
+  connectivity_plus: ^5.0.1
 dev_dependencies:
   flutter_test:
     sdk: flutter

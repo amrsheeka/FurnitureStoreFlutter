@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:furniture_store/cubits/shop_cubit/shopCubit.dart';
 import 'package:furniture_store/cubits/shop_login_cubit/shopLoginStates.dart';
 import 'package:furniture_store/models/userModel.dart';
 import 'package:furniture_store/networks/local/CacheHelper.dart';
@@ -21,8 +21,9 @@ class ShopLoginCubit extends Cubit<ShopLoginState> {
     emit(ShopSecurePasswordState());
   }
 
-  Future<void> login({required String email,required String password })async{
+  Future<void> login({required String email,required String password ,required context})async{
     emit(ShopLoginLoadingState());
+    ShopCubit shopCubit = ShopCubit.get(context);
     fireBaseAuth.signInWithEmailAndPassword(
         email: email,
         password: password
@@ -30,6 +31,9 @@ class ShopLoginCubit extends Cubit<ShopLoginState> {
       if(value.user!.emailVerified){
         uid=value.user?.uid;
         CacheHelper.putData(key: 'uid', value: uid);
+        shopCubit.getUserData(uid: uid).then((value){
+          shopCubit.getOrders();
+        });
         emit(ShopLoginSuccessState());
       }else{
         emit(ShopVerifyEmailState());
@@ -80,8 +84,10 @@ class ShopLoginCubit extends Cubit<ShopLoginState> {
   Future<void> senEmailVerification()async {
     fireBaseAuth.currentUser?.sendEmailVerification();
   }
-  Future<void> loginWithGoogle()async {
+
+  Future<void> loginWithGoogle({required context})async {
     emit(ShopGoogleLoginLoadingState());
+    ShopCubit shopCubit = ShopCubit.get(context);
     GoogleSignInAccount? googleSignInAccount = await _googleSignIn.signIn();
     GoogleSignInAuthentication googleSignInAuthentication =
     await googleSignInAccount!.authentication;
@@ -101,6 +107,9 @@ class ShopLoginCubit extends Cubit<ShopLoginState> {
       UserModel userModel =UserModel(email: user?.email, uid: user?.uid, name: user?.displayName);
       createUser(userModel);
     }
+    shopCubit.getUserData(uid: user?.uid).then((value){
+      shopCubit.getOrders();
+    });
     emit(ShopLoginSuccessState());
     print(user?.email);
   }

@@ -5,16 +5,15 @@ import 'package:furniture_store/components/default_form_field.dart';
 import 'package:furniture_store/cubits/shop_cubit/shopCubit.dart';
 import 'package:furniture_store/cubits/shop_cubit/states.dart';
 import 'package:furniture_store/shared/constants.dart';
-import 'package:furniture_store/stripe_payment/payment_manager.dart';
 import '../../shared/icon_broken.dart';
 
 class AddressScreen extends StatelessWidget {
   double totalPrice;
   AddressScreen({Key? key, required this.totalPrice}) : super(key: key);
-  var formKey = GlobalKey<FormState>();
-  var streetAddress = TextEditingController();
+  TextEditingController streetAddress = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    var formKey = GlobalKey<FormState>();
     return BlocConsumer<ShopCubit, ShopState>(
       builder: (BuildContext context, state) {
         var cubit = ShopCubit.get(context);

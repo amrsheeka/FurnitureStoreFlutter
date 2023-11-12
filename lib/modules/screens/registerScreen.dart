@@ -5,25 +5,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:furniture_store/components/show_alert.dart';
 import 'package:furniture_store/cubits/shop_login_cubit/shopLoginStates.dart';
-import 'package:furniture_store/layouts/shopLayout.dart';
 import 'package:furniture_store/modules/screens/loginScreen.dart';
 import '../../components/default_button.dart';
 import '../../components/default_form_field.dart';
 import '../../components/navigation.dart';
 import '../../components/show_toast.dart';
 import '../../cubits/shop_login_cubit/shopLoginCubit.dart';
-import '../../shared/components.dart';
 import '../../shared/constants.dart';
 
 class RegisterScreen extends StatelessWidget {
-  RegisterScreen({Key? key}) : super(key: key);
-  var name = TextEditingController();
-  var email = TextEditingController();
-  var confirmPassword = TextEditingController();
-  var password = TextEditingController();
-  var formKey = GlobalKey<FormState>();
+  const RegisterScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
+    var name = TextEditingController();
+    var email = TextEditingController();
+    var confirmPassword = TextEditingController();
+    var password = TextEditingController();
+    var formKey = GlobalKey<FormState>();
     return Scaffold(
       body: BlocProvider(
         create: (BuildContext context) => ShopLoginCubit(),

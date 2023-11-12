@@ -6,12 +6,11 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../components/navigation.dart';
 import '../../components/on_boarding_item.dart';
 import '../../networks/local/CacheHelper.dart';
-import '../../shared/components.dart';
 import '../../shared/constants.dart';
 import 'loginScreen.dart';
 
 class WelcomeScreen extends StatefulWidget {
-  WelcomeScreen({Key? key}) : super(key: key);
+  const WelcomeScreen({Key? key}) : super(key: key);
 
   @override
   State<WelcomeScreen> createState() => _WelcomeScreenState();

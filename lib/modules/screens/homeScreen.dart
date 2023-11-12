@@ -14,8 +14,7 @@ import '../../cubits/shop_cubit/states.dart';
 import '../../shared/constants.dart';
 
 class HomeScreen extends StatelessWidget {
-  HomeScreen({Key? key}) : super(key: key);
-  var carouselController = PageController();
+  const HomeScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ShopCubit, ShopState>(
@@ -24,7 +23,7 @@ class HomeScreen extends StatelessWidget {
           int length = cubit.products.length;
 
           return Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
             child: CustomScrollView(
               physics: const BouncingScrollPhysics(),
               slivers: [

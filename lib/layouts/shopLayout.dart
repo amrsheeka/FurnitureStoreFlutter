@@ -46,17 +46,26 @@ class ShopLayout extends StatelessWidget {
               ],
             ),
             bottomNavigationBar: BottomNavigationBar(
+              showUnselectedLabels: false,
+              fixedColor: mainColor,
+              landscapeLayout: BottomNavigationBarLandscapeLayout.spread,
+              type: BottomNavigationBarType.shifting,
+              unselectedItemColor: Colors.grey,
+
               onTap: (index) {
                 cubit.changeIndex(index);
               },
               currentIndex: cubit.currentIndex,
-              items: const [
+              items: [
                 BottomNavigationBarItem(
+                  backgroundColor: Colors.blueGrey[50],
                     icon: Icon(IconBroken.Home), label: 'Home'),
                 BottomNavigationBarItem(
                     icon: Icon(IconBroken.Heart), label: 'Favourites'),
                 BottomNavigationBarItem(
                     icon: Icon(IconBroken.Buy), label: 'Orders'),
+                BottomNavigationBarItem(
+                    icon: Icon(IconBroken.User), label: 'Profile'),
               ],
             ),
             body: cubit.screens[cubit.currentIndex]);

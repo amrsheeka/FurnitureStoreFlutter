@@ -10,12 +10,14 @@ import '../../components/home_item.dart';
 import '../../shared/icon_broken.dart';
 
 class SearchScreen extends StatelessWidget {
-  SearchScreen({Key? key}) : super(key: key);
-  var query = TextEditingController();
+  const SearchScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
+    var query = TextEditingController();
     return BlocConsumer<ShopCubit,ShopState>(
       builder: (BuildContext context, state) {
+
         var cubit = ShopCubit.get(context);
         int length = cubit.searchResults.length;
         return Scaffold(

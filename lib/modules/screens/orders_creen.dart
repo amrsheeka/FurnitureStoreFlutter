@@ -17,7 +17,7 @@ class OrdersScreen extends StatelessWidget {
             children: [
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
                   child: cubit.orders.isNotEmpty
                       ? GridView.count(
                         crossAxisCount: 1,

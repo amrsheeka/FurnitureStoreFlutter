@@ -16,7 +16,7 @@ class FavoriteScreen extends StatelessWidget {
           int length = cubit.favoriteItems.length;
 
           return Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
             child: cubit.favoriteItems.isNotEmpty?SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
               child:

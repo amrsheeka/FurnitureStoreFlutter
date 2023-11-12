@@ -13,13 +13,14 @@ import '../../shared/icon_broken.dart';
 import 'loginScreen.dart';
 
 class ResetPassword extends StatelessWidget {
-  ResetPassword({Key? key}) : super(key: key);
-  var email = TextEditingController();
-  var formKey = GlobalKey<FormState>();
+  const ResetPassword({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
+    var email = TextEditingController();
+    var formKey = GlobalKey<FormState>();
     return BlocProvider(
-        create: (context) => ShopLoginCubit(),
+      create: (context) => ShopLoginCubit(),
       child: BlocConsumer<ShopLoginCubit,ShopLoginState>(
         builder: (context, state) {
           ShopLoginCubit cubit = ShopLoginCubit.get(context);

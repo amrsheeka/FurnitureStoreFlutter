@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:furniture_store/cubits/shop_cubit/states.dart';
 import 'package:furniture_store/models/product_order_model.dart';
 import 'package:furniture_store/models/review_model.dart';
+import 'package:furniture_store/modules/screens/profile_screen.dart';
 import 'package:furniture_store/stripe_payment/payment_manager.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import '../../models/order_model.dart';
@@ -21,8 +22,8 @@ import '../../shared/constants.dart';
 class ShopCubit extends Cubit<ShopState> {
   ShopCubit() : super(ShopInitialState());
   static ShopCubit get(context) => BlocProvider.of(context);
-  List<Widget> screens = [HomeScreen(), FavoriteScreen(), OrdersScreen()];
-  List<String> appBarTitle = ['Home', 'Favorite', 'Orders'];
+  List<Widget> screens = [HomeScreen(), FavoriteScreen(), OrdersScreen(),ProfileScreen()];
+  List<String> appBarTitle = ['Home', 'Favorite', 'Orders','Profile'];
   FirebaseFirestore instance = FirebaseFirestore.instance;
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   int currentIndex = 0;
@@ -40,6 +41,7 @@ class ShopCubit extends Cubit<ShopState> {
   Future<void> getUserData({required String? uid})async {
     instance.collection('users').doc(uid).get().then((value) {
       user = UserModel.fromJson(json: value.data());
+      appBarTitle[appBarTitle.length-1]='${user?.name}';
       favorite = user!.favorite;
       cart =user!.cart;
       emit(ShopGetUserSuccessState());
@@ -198,6 +200,7 @@ class ShopCubit extends Cubit<ShopState> {
   String searchQuery='';
   Future<void> getCategoryByName(String name)async{
     instance.collection('products').where('type',isEqualTo: name).get().then((value){
+      print(value.docs.length);
       products=[];
       products.addAll(value.docs
           .map((doc) => ProductModel.fromJson(json: doc.data()))
@@ -227,6 +230,7 @@ class ShopCubit extends Cubit<ShopState> {
   int selectedCategory=0;
   void changeCategory({required index,required name}){
     selectedCategory=index;
+    print(name);
     emit(ShopChangeCategoryState());
     if(name=='All'){
       getAllProducts();

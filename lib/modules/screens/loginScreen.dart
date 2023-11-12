@@ -14,12 +14,12 @@ import '../../cubits/shop_login_cubit/shopLoginCubit.dart';
 import '../../shared/constants.dart';
 
 class LoginScreen extends StatelessWidget {
-  LoginScreen({Key? key}) : super(key: key);
-  var email = TextEditingController();
-  var password = TextEditingController();
-  var formKey = GlobalKey<FormState>();
+  const LoginScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    var email = TextEditingController();
+    var password = TextEditingController();
+    var formKey = GlobalKey<FormState>();
     return Scaffold(
       body: BlocProvider(
         create: (BuildContext context) => ShopLoginCubit(),
@@ -111,7 +111,8 @@ class LoginScreen extends StatelessWidget {
                                               cubit
                                                   .login(
                                                       email: email.text,
-                                                      password: password.text)
+                                                      password: password.text,
+                                                  context: context)
                                                   .then((value) {})
                                                   .catchError((error) {});
                                             }
@@ -183,7 +184,7 @@ class LoginScreen extends StatelessWidget {
                                                   ],
                                                 ))),
                                         onTap: () {
-                                          cubit.loginWithGoogle();
+                                          cubit.loginWithGoogle(context: context);
                                         },
                                       ),
                                       fallback: (context) =>
