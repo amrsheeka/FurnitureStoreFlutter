@@ -17,13 +17,15 @@ Widget favoriteItem(
     onTap: () {
       navigateTo(context: context, page: ProductScreen(data!, index));
     },
-    child: Card(
-      clipBehavior: Clip.antiAliasWithSaveLayer,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(30),
-        //set border radius more than 50% of height and width to make circle
-      ),
-      child: SizedBox(
+    child: Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10.0),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(30),
+          gradient: LinearGradient(
+            colors: [Colors.white, Colors.white,secondaryColor,]
+          )
+        ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -70,7 +72,7 @@ Widget favoriteItem(
                     )
                   ],
                 ),
-                Container(
+                SizedBox(
                   height: 120,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -78,9 +80,15 @@ Widget favoriteItem(
                     children: [
                       data.oldPrice > data.price
                           ? Container(
-                        color: Colors.green,
-                        padding: EdgeInsetsDirectional.all(2.0),
-                        child: Text(
+
+                        decoration: const BoxDecoration(
+                          color: mainColor,
+                          gradient: LinearGradient(
+                            colors: [Colors.red, mainColor],
+                          ),
+                        ),
+                        padding: const EdgeInsetsDirectional.all(2.0),
+                        child: const Text(
                           'Discount',
                           style: TextStyle(
                             fontSize: 12,
@@ -98,7 +106,7 @@ Widget favoriteItem(
                     padding: const EdgeInsetsDirectional.only(end: 8.0),
                     child: CircleAvatar(
                         radius: 23,
-                        backgroundColor: cubit.favorite['${data.id}'] == true
+                        backgroundColor: cubit.favorite[data.id] == true
                             ? mainColor
                             : Colors.grey[200],
                         child: IconButton(
@@ -110,14 +118,6 @@ Widget favoriteItem(
                             cubit.toggleFavorite(id: '${data.id}');
                           },
                         )),
-                  ),
-                ),
-                Container(
-                  height: 130,
-                  child: Align(
-                    alignment: AlignmentDirectional.bottomEnd,
-                    child: IconButton(
-                        onPressed: () {}, icon: Icon(Icons.add_shopping_cart)),
                   ),
                 ),
               ],

@@ -15,7 +15,7 @@ Widget categoriesItem({required ShopCubit cubit, required index,required String 
           border: Border.all(color: mainColor),
           borderRadius: BorderRadius.circular(20),
           color:
-          cubit.selectedCategory == index ? mainColor : Colors.blueGrey[50]),
+          cubit.selectedCategory == index ? mainColor : secondaryColor),
       child: Center(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12.0),

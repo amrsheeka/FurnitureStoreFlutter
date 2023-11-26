@@ -17,13 +17,15 @@ Widget cartItem(
     onTap: () {
       navigateTo(context: context, page: ProductScreen(data!, index));
     },
-    child: Card(
-      clipBehavior: Clip.antiAliasWithSaveLayer,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(30),
-        //set border radius more than 50% of height and width to make circle
-      ),
-      child: SizedBox(
+    child: Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10.0),
+      child: Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(30),
+            gradient: LinearGradient(
+                colors: [Colors.white, Colors.white,secondaryColor]
+            )
+        ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -72,7 +74,7 @@ Widget cartItem(
                     )
                   ],
                 ),
-                Container(
+                SizedBox(
                   height: 120,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -81,7 +83,7 @@ Widget cartItem(
                       data.oldPrice > data.price
                           ? Container(
                         color: Colors.green,
-                        padding: EdgeInsetsDirectional.all(2.0),
+                        padding: const EdgeInsetsDirectional.all(2.0),
                         child: const Text(
                           'Discount',
                           style: TextStyle(
@@ -102,7 +104,7 @@ Widget cartItem(
                         onPressed: () {
                           cubit.toggleCart(
                               index: index,
-                              id: '${data.id}',
+                              id: data.id,
                               imageIndex: cubit.cart[index].imageIndex);
                         },
                         icon: const Icon(
@@ -132,7 +134,7 @@ Widget cartItem(
                                 onPressed: () {
                                   cubit.toggleCart(
                                       index: index,
-                                      id: '${data.id}',
+                                      id: data.id,
                                       imageIndex:
                                       cubit.cart[index].imageIndex);
                                 },
@@ -147,7 +149,7 @@ Widget cartItem(
                                     amount: amount,
                                     imageIndex:
                                     cubit.cart[index].imageIndex,
-                                    id: '${data.id}',
+                                    id: data.id,
                                     productIndex:
                                     cubit.cart[index].productIndex);
                               },
@@ -167,7 +169,7 @@ Widget cartItem(
                                     index: index,
                                     amount: amount,
                                     imageIndex: cubit.cart[index].imageIndex,
-                                    id: '${data.id}',
+                                    id: data.id,
                                     productIndex:
                                     cubit.cart[index].productIndex);
                               },

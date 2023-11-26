@@ -21,13 +21,13 @@ class ShopLayout extends StatelessWidget {
       builder: (context, state) {
         var cubit = ShopCubit.get(context);
         return Scaffold(
-            appBar: AppBar(
+            appBar: cubit.currentIndex!=cubit.screens.length-1?AppBar(
               backgroundColor: Colors.white,
               title: Text(cubit.appBarTitle[cubit.currentIndex]),
               actions: [
                 IconButton(
                     onPressed: () {
-                      navigateTo(context: context, page: CartScreen());
+                      navigateTo(context: context, page: const CartScreen());
                     },
                     icon: const Icon(
                       IconBroken.Bag,
@@ -36,18 +36,21 @@ class ShopLayout extends StatelessWidget {
                 IconButton(
                     onPressed: () {
                       cubit.logOut().then((value){
-                        navigateAndFinish(context: context, page: LoginScreen());
+                        navigateAndFinish(context: context, page: const LoginScreen());
                       });
                     },
-                    icon: Icon(
+                    icon: const Icon(
                       IconBroken.Logout,
                       color: Colors.red,
                     ))
               ],
-            ),
+            ):null,
             bottomNavigationBar: BottomNavigationBar(
               showUnselectedLabels: false,
               fixedColor: mainColor,
+              unselectedIconTheme: const IconThemeData(
+                color: Colors.blueGrey
+              ),
               landscapeLayout: BottomNavigationBarLandscapeLayout.spread,
               type: BottomNavigationBarType.shifting,
               unselectedItemColor: Colors.grey,
@@ -56,9 +59,8 @@ class ShopLayout extends StatelessWidget {
                 cubit.changeIndex(index);
               },
               currentIndex: cubit.currentIndex,
-              items: [
+              items: const [
                 BottomNavigationBarItem(
-                  backgroundColor: Colors.blueGrey[50],
                     icon: Icon(IconBroken.Home), label: 'Home'),
                 BottomNavigationBarItem(
                     icon: Icon(IconBroken.Heart), label: 'Favourites'),

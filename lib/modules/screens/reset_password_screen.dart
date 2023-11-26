@@ -44,22 +44,22 @@ class ResetPassword extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Container(
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                             image: DecorationImage(
                                 image: AssetImage('images/email.png'))),
                       ),
                     ),
-                    Text('Type your email to reset your password',style: TextStyle(
+                    const Text('Type your email to reset your password',style: TextStyle(
                       fontSize: 20,
                     ),textAlign: TextAlign.center,),
-                    SizedBox(height: 30,),
+                    const SizedBox(height: 30,),
                     Expanded(
                       child: SingleChildScrollView(
                         child: Form(
                           key: formKey,
                           child: Column(
                             children: [
-                              SizedBox(height: 10,),
+                              const SizedBox(height: 10,),
                               defaultFormField(
                                   validator: (value) {
                                     if (value!.isEmpty) {
@@ -74,7 +74,7 @@ class ResetPassword extends StatelessWidget {
                                   controller: email,
                                   keyboardType: TextInputType.emailAddress
                               ),
-                              SizedBox(height: 30,),
+                              const SizedBox(height: 30,),
                               ConditionalBuilder(
                                   condition: state is !ShopResetPasswordLoadingState,
                                   builder: (context) => defaultButton(
@@ -103,7 +103,7 @@ class ResetPassword extends StatelessWidget {
         listener: (context, state) {
           if(state is ShopResetPasswordSuccessState){
             showToast(message: 'Check Email', type: ToastType.SUCCESS);
-            navigateTo(context: context, page: LoginScreen());
+            navigateAndFinish(context: context, page: const LoginScreen());
           }else if(state is ShopResetPasswordErrorState){
             showToast(message: 'This email is not registered', type: ToastType.ERROR);
           }

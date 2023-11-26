@@ -22,7 +22,7 @@ import '../../shared/constants.dart';
 class ShopCubit extends Cubit<ShopState> {
   ShopCubit() : super(ShopInitialState());
   static ShopCubit get(context) => BlocProvider.of(context);
-  List<Widget> screens = [HomeScreen(), FavoriteScreen(), OrdersScreen(),ProfileScreen()];
+  List<Widget> screens = [const HomeScreen(), const FavoriteScreen(), const OrdersScreen(),const ProfileScreen()];
   List<String> appBarTitle = ['Home', 'Favorite', 'Orders','Profile'];
   FirebaseFirestore instance = FirebaseFirestore.instance;
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
@@ -41,7 +41,6 @@ class ShopCubit extends Cubit<ShopState> {
   Future<void> getUserData({required String? uid})async {
     instance.collection('users').doc(uid).get().then((value) {
       user = UserModel.fromJson(json: value.data());
-      appBarTitle[appBarTitle.length-1]='${user?.name}';
       favorite = user!.favorite;
       cart =user!.cart;
       emit(ShopGetUserSuccessState());
@@ -68,7 +67,6 @@ class ShopCubit extends Cubit<ShopState> {
     }
 
     updateUser(favorite: favorite).then((value) {
-      getUserData(uid: uid);
       getFavorite();
       if(favorite[id]==true){
         emit(ShopAddToFavouriteState());
@@ -84,7 +82,7 @@ class ShopCubit extends Cubit<ShopState> {
   void getFavorite(){
     favoriteItems=[];
     for (var element in products) {
-      if(favorite['${element.id}']==true){
+      if(favorite[element.id]==true){
         favoriteItems.add(element);
       }
     }
@@ -115,7 +113,6 @@ class ShopCubit extends Cubit<ShopState> {
       emit(ShopDeleteFromCartState());
     }
     updateUser(cart: cart.map((item) => item.toJson()).toList()).then((value) {
-      getUserData(uid: uid);
       getCart();
       calcTotalPrice();
       if(amount!=null){
@@ -151,11 +148,13 @@ class ShopCubit extends Cubit<ShopState> {
     String? name,
     String? email,
     String? image,
+    List<dynamic>? addresses,
     List<Map<String,dynamic>>? cart,
     Map<String, dynamic>? favorite,
   }) async {
     Map<String, dynamic> newUser = {
       'uid': uid,
+      'addresses':addresses??user?.addresses,
       'name': name ?? user?.name,
       'email': email ?? user?.email,
       'image': image ?? user?.image,
@@ -166,10 +165,32 @@ class ShopCubit extends Cubit<ShopState> {
         .collection('users')
         .doc(uid)
         .update(newUser)
-        .then((value) {})
-        .catchError((error) {});
+        .then((value) {
+      getUserData(uid: uid);
+    })
+        .catchError((error) {
+          return throw error;
+    });
   }
-
+  void addAddress({required String address}){
+    emit(AddAddressLoadingState());
+    user!.addresses.add('$selectedCity, $address');
+    updateUser(addresses: user!.addresses).then((value){
+      emit(AddAddressSuccessState());
+    }).catchError((error){
+      user!.addresses.removeAt(user!.addresses.length-1);
+      emit(AddAddressErrorState(error));
+    });
+  }
+  void deleteAddress({required int index}){
+    emit(DeleteAddressLoadingState());
+    user!.addresses.removeAt(index);
+    updateUser(addresses: user!.addresses).then((value){
+      emit(DeleteAddressSuccessState());
+    }).catchError((error){
+      emit(DeleteAddressErrorState(error));
+    });
+  }
   List<ProductModel> products = [];
   Future<void> getAllProducts() async {
     instance.collection('products').get().then((value){
@@ -276,13 +297,13 @@ class ShopCubit extends Cubit<ShopState> {
     emit(ShopChangeCityState());
   }
 
-  Future<void> makeOrder({required double amount,required String city,required String street})async{
+  Future<void> makeOrder({required double amount,required String address})async{
     OrderModel order;
     List<ProductOrderModel> orderItems=[];
     for(int i=0;i<cart.length;i++){
     orderItems.add(ProductOrderModel(cartItems[i], cart[i].count,cartItems[i].images[cart[i].imageIndex]));
     }
-    order=OrderModel(orderItems,uid!,'$city, $street',amount);
+    order=OrderModel(orderItems,uid!,address,amount);
     PaymentManager.makePayment(amount.round(), 'USD').then((value){
       if(value){
         instance.collection('orders').add(order.toJson()).then((value){
@@ -304,6 +325,7 @@ class ShopCubit extends Cubit<ShopState> {
 
   List<OrderModel> orders=[];
   Future<void> getOrders()async{
+    orders=[];
     instance.collection('orders').where('uid',isEqualTo: uid).get().then((value) {
       orders.addAll(value.docs
           .map((doc) => OrderModel.fromJson(json: doc.data()))
@@ -397,5 +419,15 @@ class ShopCubit extends Cubit<ShopState> {
     googleSignIn.signOut();
     emit(ShopLogOutState());
   }
-
+  Future<void> resetPassword({required String email}) async {
+    emit(ShopChangePasswordLoadingState());
+    firebaseAuth
+        .sendPasswordResetEmail(email: email)
+        .then((value) {
+      emit(ShopChangePasswordSuccessState());
+    })
+        .catchError((error) {
+      emit(ShopChangePasswordErrorState(error));
+    });
+  }
 }

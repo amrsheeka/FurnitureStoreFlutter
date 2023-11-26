@@ -19,10 +19,22 @@ Widget homeItem(
         navigateTo(context: context, page: ProductScreen(data, index));
       });
     },
-    child: Card(
-      //color: Colors.grey[100],
-      child: Padding(
-        padding: const EdgeInsetsDirectional.only(start: 8.0),
+    child: Padding(
+      padding: const EdgeInsetsDirectional.only(start: 8.0),
+      child: Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            gradient: LinearGradient(
+              begin: AlignmentDirectional.topCenter,
+                end: AlignmentDirectional.bottomCenter,
+                colors: [
+                  Colors.white,
+                  Colors.white
+                  ,Colors.white,Colors.white,
+                  secondaryColor
+                ]
+            )
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -35,7 +47,7 @@ Widget homeItem(
                       image: DecorationImage(
                           image: NetworkImage('${data?.images[0]}'))),
                 ),
-                Container(
+                SizedBox(
                   height: 120,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -43,9 +55,15 @@ Widget homeItem(
                     children: [
                       data!.oldPrice > data.price
                           ? Container(
-                        color: Colors.green,
-                        padding: EdgeInsetsDirectional.all(2.0),
-                        child: Text(
+                        decoration: const BoxDecoration(
+                          color: Colors.green,
+                          gradient: LinearGradient(
+                            colors: [Colors.red, mainColor],
+                          ),
+                        ),
+
+                        padding: const EdgeInsetsDirectional.all(2.0),
+                        child: const Text(
                           'Discount',
                           style: TextStyle(
                             fontSize: 12,
@@ -61,12 +79,11 @@ Widget homeItem(
               ],
             ),
             Text(
-              '${data.name}',
+              data.name,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: const TextStyle(fontWeight: FontWeight.bold),
             ),
-            //Spacer(),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -74,19 +91,19 @@ Widget homeItem(
                   children: [
                     Text(
                       '${data.price} \$',
-                      style: TextStyle(color: mainColor),
+                      style: const TextStyle(color: mainColor),
                     ),
                     data.oldPrice > data.price
                         ? Text(
                       '${data.oldPrice} \$',
-                      style: TextStyle(
+                      style: const TextStyle(
                           decoration: TextDecoration.lineThrough,
                           color: Colors.grey),
                     )
                         : Container(),
                   ],
                 ),
-                Spacer(),
+                const Spacer(),
                 CircleAvatar(
                     radius: 23,
                     backgroundColor: cubit.favorite[data.id] == true

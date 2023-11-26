@@ -39,7 +39,7 @@ class HomeScreen extends StatelessWidget {
                                   padding: EdgeInsetsDirectional.symmetric(horizontal: 30),
                                   height: 50,
                                   decoration: BoxDecoration(
-                                      color: Colors.blueGrey[50],
+                                      color: secondaryColor,
                                       borderRadius: BorderRadius.circular(20)
 
                                   ),

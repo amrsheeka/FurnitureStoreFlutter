@@ -79,3 +79,21 @@ class ShopGetMyProductReviewErrorState extends ShopState{
 }
 class ShopChangeCommentState extends ShopState{}
 class ShopChangeRateState extends ShopState{}
+class AddAddressLoadingState extends ShopState{}
+class AddAddressSuccessState extends ShopState{}
+class AddAddressErrorState extends ShopState{
+  var error;
+  AddAddressErrorState(this.error);
+}
+class DeleteAddressLoadingState extends ShopState{}
+class DeleteAddressSuccessState extends ShopState{}
+class DeleteAddressErrorState extends ShopState{
+  var error;
+  DeleteAddressErrorState(this.error);
+}
+class ShopChangePasswordLoadingState extends ShopState{}
+class ShopChangePasswordSuccessState extends ShopState{}
+class ShopChangePasswordErrorState extends ShopState{
+  var error;
+  ShopChangePasswordErrorState(this.error);
+}

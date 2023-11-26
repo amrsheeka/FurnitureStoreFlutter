@@ -6,6 +6,7 @@ import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:furniture_store/components/show_toast.dart';
 import 'package:furniture_store/cubits/connection_cubit/connection_cubit.dart';
 import 'package:furniture_store/cubits/shop_cubit/shopCubit.dart';
+import 'package:furniture_store/shared/bloc_observer.dart';
 import 'package:furniture_store/shared/constants.dart';
 import 'package:furniture_store/stripe_payment/stripe_keys.dart';
 import 'cubits/connection_cubit/connection_states.dart';
@@ -17,6 +18,7 @@ import 'networks/remote/dioHelper.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  Bloc.observer = MyBlocObserver();
   Stripe.publishableKey=ApiKeys.publishableKey;
   await Firebase.initializeApp();
   await CacheHelper.init();
@@ -32,17 +34,16 @@ class MyApp extends StatelessWidget {
   bool? welcome;
   // const MyApp({Key? key}) : super(key: key);
   MyApp({Key? key, required this.welcome, required this.uid}) : super(key: key);
-
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     Widget initialScreen;
     if (welcome == null) {
-      initialScreen = WelcomeScreen();
+      initialScreen = const WelcomeScreen();
     } else if (uid == null) {
-      initialScreen = LoginScreen();
+      initialScreen = const LoginScreen();
     } else {
-      initialScreen = ShopLayout();
+      initialScreen = const ShopLayout();
     }
     return MultiBlocProvider(
       providers: [

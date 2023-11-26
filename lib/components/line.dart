@@ -5,17 +5,21 @@ Widget line({ String? inlineText,Icon? icon})=>Row(
     Expanded(
       child: Container(
         height: 1,
-
         color: Colors.blueGrey[50],
       ),
     ),
     Row(
       children: [
-        Padding(
+        inlineText==null?const SizedBox():Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10.0),
-          child: Text(inlineText??'',style: const TextStyle(fontSize: 10,color: Colors.blueGrey),),
+          child: Text(inlineText,style: const TextStyle(fontSize: 10,color: Colors.blueGrey),
+          ),
         ),
-        icon??Container()
+        icon==null?const SizedBox()
+            :Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+          child: icon,
+        )
       ],
     ),
     Expanded(

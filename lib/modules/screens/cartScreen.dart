@@ -7,7 +7,7 @@ import '../../components/cart_item.dart';
 import '../../components/default_button.dart';
 import '../../cubits/shop_cubit/shopCubit.dart';
 import '../../cubits/shop_cubit/states.dart';
-import 'address_screen.dart';
+import 'select_address_screen.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({Key? key}) : super(key: key);
@@ -104,7 +104,7 @@ class CartScreen extends StatelessWidget {
                           defaultButton(
                               onPressed: cubit.cartItems.isEmpty?null:(){
                                 cubit.getCities().then((value){
-                                  navigateTo(context: context, page: AddressScreen(totalPrice: cubit.totalPrice,));
+                                  navigateTo(context: context, page: const SelectAddressScreen());
                                 });
                               },
                               text: 'Purchase',

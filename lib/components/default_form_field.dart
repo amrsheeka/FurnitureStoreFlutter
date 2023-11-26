@@ -24,13 +24,13 @@ Widget defaultFormField(
       initialValue: initialValue,
       onChanged: onChanged,
       decoration: InputDecoration(
-        contentPadding: EdgeInsets.symmetric(vertical: 15),
+        contentPadding: const EdgeInsets.symmetric(vertical: 15),
         prefixIcon: prefixIcon,
         suffixIcon: suffixIcon,
         prefixIconColor: mainColor,
         focusColor: mainColor,
         iconColor: mainColor,
-        fillColor: Colors.blueGrey[50],
+        fillColor: secondaryColor,
         filled: true,
         label: Text(label),
         border: OutlineInputBorder(

@@ -2,6 +2,7 @@ class UserModel{
   String? uid;
   String? email;
   String? name;
+  List<dynamic> addresses=[];
   String image='https://t4.ftcdn.net/jpg/02/23/50/73/360_F_223507349_F5RFU3kL6eMt5LijOaMbWLeHUTv165CB.jpg';
   List<CartItemModel> cart= [];
   Map<String,dynamic> favorite= {};
@@ -15,6 +16,7 @@ class UserModel{
     email=json['email'];
     name=json['name'];
     image=json['image'];
+    addresses=json['addresses']??[];
     json['cart'].forEach((e){
       cart.add(CartItemModel.fromJson(json: e));
     });
@@ -26,6 +28,7 @@ class UserModel{
       'email':email,
       'name':name,
       'image':image,
+      'addresses':addresses,
       'cart': cart.isEmpty?[]:cart.map((item) => item.toJson()).toList(),
       'favorite':favorite
     };
