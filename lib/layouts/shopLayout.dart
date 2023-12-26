@@ -10,9 +10,22 @@ import '../cubits/shop_cubit/shopCubit.dart';
 import '../cubits/shop_cubit/states.dart';
 import '../shared/constants.dart';
 
-class ShopLayout extends StatelessWidget {
+class ShopLayout extends StatefulWidget {
   const ShopLayout({Key? key}) : super(key: key);
 
+  @override
+  State<ShopLayout> createState() => _ShopLayoutState();
+}
+
+class _ShopLayoutState extends State<ShopLayout> {
+  @override
+  void initState() {
+    var cubit = ShopCubit.get(context);
+    cubit.getData().then((value){
+      cubit.getOrders();
+    });
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ShopCubit, ShopState>(

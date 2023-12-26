@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 
 Widget onBoardingItem(
@@ -9,7 +9,7 @@ Widget onBoardingItem(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Expanded(
-          flex: 3,
+          flex: 1,
           child: Container(
             decoration: BoxDecoration(
                 image: DecorationImage(
@@ -21,29 +21,29 @@ Widget onBoardingItem(
         Expanded(
           flex: 1,
           child: Padding(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             child: Container(
               decoration: BoxDecoration(
                   color: Colors.white.withOpacity(0.3),
                   borderRadius: BorderRadius.circular(20)),
-              child: Container(
+              child: SizedBox(
                 height: double.infinity,
                 width: double.infinity,
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Column(
                     children: [
                       Text('$title',
-                          style: TextStyle(fontSize: 30),
+                          style: const TextStyle(fontSize: 25),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       Text('$body',
-                          style: TextStyle(
-                              fontSize: 20, height: 1, color: Colors.blueGrey),
-                          maxLines: 2,
+                          style: const TextStyle(
+                              fontSize: 18, height: 1, color: Colors.blueGrey),
+                          maxLines: 10,
                           overflow: TextOverflow.ellipsis)
                     ],
                   ),

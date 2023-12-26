@@ -62,7 +62,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Shop Demo',
         theme: ThemeData(
-          primarySwatch: Colors.deepPurple,
+          primarySwatch: mainColor as MaterialColor,
           scaffoldBackgroundColor: Colors.white,
           fontFamily: 'Jannah',
           textTheme: const TextTheme(),

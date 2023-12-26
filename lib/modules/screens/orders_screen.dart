@@ -21,7 +21,7 @@ class OrdersScreen extends StatelessWidget {
                   child: cubit.orders.isNotEmpty
                       ? GridView.count(
                         crossAxisCount: 1,
-                        childAspectRatio: 2.1,
+                        childAspectRatio: 1.8,
                         // crossAxisSpacing: 0.1,
                         // mainAxisSpacing: 0.1,
                         children: List.generate(

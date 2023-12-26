@@ -102,14 +102,11 @@ class ShopLoginCubit extends Cubit<ShopLoginState> {
     assert(authResult.user?.uid == fireBaseAuth.currentUser?.uid);
     uid = user?.uid;
     CacheHelper.putData(key: 'uid', value: user?.uid);
-    var userExist= await _checkIfDocExists(uid!);
+    bool userExist= await _checkIfDocExists(uid!);
     if(!userExist){
       UserModel userModel =UserModel(email: user?.email, uid: user?.uid, name: user?.displayName);
       createUser(userModel);
     }
-    shopCubit.getUserData(uid: user?.uid).then((value){
-      shopCubit.getOrders();
-    });
     emit(ShopLoginSuccessState());
     print(user?.email);
   }

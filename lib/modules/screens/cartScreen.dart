@@ -33,25 +33,23 @@ class CartScreen extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: cubit.cartItems.isNotEmpty
-                        ? SingleChildScrollView(
-                            physics: const BouncingScrollPhysics(),
-                            child: GridView.count(
-                              physics: const NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              crossAxisCount: 1,
-                              childAspectRatio: 2.3,
-                              // crossAxisSpacing: 0.1,
-                              // mainAxisSpacing: 0.1,
-                              children: List.generate(
-                                  length,
-                                  (index) => cartItem(
-                                      data: cubit.cartItems[index],
-                                      context: context,
-                                      cubit: cubit,
-                                      index: index
-                                  )
-                              ),
-                            ))
+                        ? GridView.count(
+                          physics: const BouncingScrollPhysics(),
+                          shrinkWrap: true,
+                          crossAxisCount: 1,
+                          childAspectRatio: 2.0,
+                          // crossAxisSpacing: 0.1,
+                          // mainAxisSpacing: 0.1,
+                          children: List.generate(
+                              length,
+                              (index) => cartItem(
+                                  data: cubit.cartItems[index],
+                                  context: context,
+                                  cubit: cubit,
+                                  index: index
+                              )
+                          ),
+                        )
                         : Align(
                             alignment: AlignmentDirectional.center,
                             child: Column(

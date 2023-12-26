@@ -34,12 +34,12 @@ class LoginScreen extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Container(
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                             image: DecorationImage(
                                 image: AssetImage('images/onbording1.png'))),
                       ),
                     ),
-                    Text(
+                    const Text(
                       'Login',
                       style: TextStyle(fontSize: 40),
                     ),

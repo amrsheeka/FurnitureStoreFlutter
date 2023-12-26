@@ -12,7 +12,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import '../../models/order_model.dart';
 import '../../models/productModel.dart';
 import '../../models/userModel.dart';
-import '../../modules/screens/orders_creen.dart';
+import '../../modules/screens/orders_screen.dart';
 import '../../modules/screens/favoriteScreen.dart';
 import '../../modules/screens/homeScreen.dart';
 import '../../networks/local/CacheHelper.dart';
@@ -243,6 +243,7 @@ class ShopCubit extends Cubit<ShopState> {
   Future<void> getData()async{
     uid=firebaseAuth.currentUser?.uid;
     getUserData(uid: uid).then((value){
+      getSliders();
       getAllProducts();
       getCategories();
     });

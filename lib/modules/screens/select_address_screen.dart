@@ -3,11 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:furniture_store/components/default_button.dart';
 import 'package:furniture_store/components/default_form_field.dart';
+import 'package:furniture_store/components/navigation.dart';
 import 'package:furniture_store/cubits/shop_cubit/shopCubit.dart';
 import 'package:furniture_store/cubits/shop_cubit/states.dart';
+import 'package:furniture_store/modules/screens/orders_screen.dart';
 import 'package:furniture_store/shared/constants.dart';
 import '../../components/line.dart';
 import '../../components/show_toast.dart';
+import '../../layouts/shopLayout.dart';
 import '../../shared/icon_broken.dart';
 
 class SelectAddressScreen extends StatefulWidget {
@@ -220,7 +223,11 @@ class _SelectAddressScreenState extends State<SelectAddressScreen> {
                             defaultButton(
                                 onPressed: (){
                                   if(selectedAddress!=-1){
-                                    cubit.makeOrder(amount: cubit.totalPrice, address: cubit.user?.addresses[selectedAddress]);
+                                    cubit.makeOrder(amount: cubit.totalPrice, address: cubit.user?.addresses[selectedAddress])
+                                        .then((value) {
+                                          cubit.changeIndex(2);
+                                          navigateTo(context: context, page: const ShopLayout());
+                                    });
                                   }else{
                                     showToast(message: 'Select your address', type: ToastType.WARNING);
                                   }

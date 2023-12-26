@@ -22,9 +22,21 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   bool isLast = false;
 
   List<Map<String, dynamic>> onBordingList = [
-    {"title": "title1", "body": "body1", "picture": "images/onbording1.png"},
-    {"title": "title2", "body": "body2", "picture": "images/onbording1.png"},
-    {"title": "title3", "body": "body3", "picture": "images/onbording1.png"}
+    {
+      "title": " Discover a World of Elegance",
+      "body": "Welcome to Furniture Store, where style meets comfort! We're thrilled to have you on board. Get ready to embark on a journey of discovering exquisite furniture that complements your lifestyle. Swipe through our onboarding screens to explore the endless possibilities of turning your house into a home.",
+      "picture": "images/onbording1.png"
+    },
+    {
+      "title": "Dive into Distinctive Designs",
+      "body": "At Furniture Store, we believe that every piece of furniture tells a story. From timeless classics to modern marvels, our collections are carefully curated to cater to diverse tastes. Swipe left to explore our range of sofas, tables, beds, and more. Immerse yourself in the world of distinctive designs that speak volumes about your unique style.",
+      "picture": "images/onbording1.png"
+    },
+    {
+      "title": "Personalize Your Space",
+      "body": "Congratulations on reaching the final onboarding screen! At Furniture Store, we understand that your home is an extension of your personality. Swipe through our customization options and discover how you can tailor our furniture to fit your vision. From colors to fabrics, make each piece uniquely yours. Start creating a space that reflects who you are, one piece of furniture at a time.",
+      "picture": "images/onbording1.png"
+    }
   ];
 
   @override
@@ -34,13 +46,13 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Container(
-            margin: EdgeInsets.only(top: 10),
+            margin: const EdgeInsets.only(top: 10),
             child: TextButton(
                 onPressed: () {
                   CacheHelper.putData(key: 'onBording', value: false);
                   navigateAndFinish(context: context, page: LoginScreen());
                 },
-                child: Text(
+                child: const Text(
                   'Skip',
                   style: TextStyle(fontSize: 20, color: mainColor),
                 )),
@@ -48,7 +60,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           Expanded(
             child: PageView.builder(
                 controller: pageViewController,
-                physics: BouncingScrollPhysics(),
+                physics: const BouncingScrollPhysics(),
                 itemCount: onBordingList.length,
                 onPageChanged: (index) {
                   if (index == onBordingList.length - 1) {
@@ -73,27 +85,27 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             child: Row(
               children: [
                 SmoothPageIndicator(
-                    effect: WormEffect(
+                    effect: const WormEffect(
                         dotHeight: 10,
                         dotWidth: 30,
                       activeDotColor: mainColor
                     ),
                     controller: pageViewController,
                     count: onBordingList.length),
-                Spacer(),
+                const Spacer(),
                 FloatingActionButton(
                   onPressed: () {
                     if (isLast) {
                       CacheHelper.putData(key: 'onBording', value: false);
-                      navigateAndFinish(context: context, page: LoginScreen());
+                      navigateAndFinish(context: context, page: const LoginScreen());
                     } else {
                       pageViewController.nextPage(
-                          duration: Duration(milliseconds: 750),
+                          duration: const Duration(milliseconds: 750),
                           curve: Curves.fastLinearToSlowEaseIn);
                     }
                   },
 
-                  child: Icon(Icons.navigate_next),
+                  child: const Icon(Icons.navigate_next),
                 ),
               ],
             ),
