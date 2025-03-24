@@ -11,7 +11,7 @@ class ConnectionCubit extends Cubit<ShopConnectionState>{
   late StreamSubscription<ConnectivityResult> _connectivitySubscription;
   ConnectivityResult connectivityResult = ConnectivityResult.none;
   void checkConnection(){
-    _connectivitySubscription=_connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
+    _connectivitySubscription=_connectivity.onConnectivityChanged.listen(_updateConnectionStatus as void Function(List<ConnectivityResult> event)?) as StreamSubscription<ConnectivityResult>;
   }
   void _updateConnectionStatus(ConnectivityResult? onData){
     if(onData == ConnectivityResult.mobile || onData == ConnectivityResult.wifi){
