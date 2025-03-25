@@ -10,6 +10,7 @@ import 'package:furniture_store/shared/bloc_observer.dart';
 import 'package:furniture_store/shared/constants.dart';
 import 'package:furniture_store/stripe_payment/stripe_keys.dart';
 import 'cubits/connection_cubit/connection_states.dart';
+import 'firebase_options.dart';
 import 'layouts/shopLayout.dart';
 import 'modules/screens/loginScreen.dart';
 import 'modules/screens/welcomScreen.dart';
@@ -20,7 +21,9 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = MyBlocObserver();
   Stripe.publishableKey=ApiKeys.publishableKey;
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   await CacheHelper.init();
   await DioHelper.init();
   bool? welcome = CacheHelper.getData(key: 'onBording');
@@ -54,9 +57,7 @@ class MyApp extends StatelessWidget {
             ..getCities()
             ..getOrders(),
         ),
-        BlocProvider(
-          create: (BuildContext context) => ConnectionCubit()..checkConnection()
-        ),
+
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -83,17 +84,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSwatch()
               .copyWith(primary: mainColor, secondary: mainColor),
         ),
-        home: BlocConsumer<ConnectionCubit,ShopConnectionState>(
-          builder: (context, state) {
-            return initialScreen;
-          },
-          listener: (context, state) {
-            if(state is ConnectedState){
-            }else if(state is NotConnectedState){
-              showToast(message: 'No internet connection', type: ToastType.ERROR);
-            }
-          },
-        ),
+        home: initialScreen,
       ),
     );
   }
