@@ -1,6 +1,11 @@
 abstract class ShopState{}
 class ShopInitialState extends ShopState{}
 class ShopGetUserSuccessState extends ShopState{}
+class ShopGetCitiesSuccessState extends ShopState{}
+class ShopGetCitiesErrorState extends ShopState{
+  var error;
+  ShopGetCitiesErrorState(this.error);
+}
 class ShopGetUserErrorState extends ShopState{
   var error;
   ShopGetUserErrorState(this.error);

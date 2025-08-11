@@ -283,12 +283,12 @@ class ShopCubit extends Cubit<ShopState> {
   
   List<dynamic> cities = [];
   Future<void> getCities() async{
-    DioHelper.getData(
-      url: '9628215e-e31a-4907-bea8-d3cbd8873386',
-    ).then((value) {
-      cities=value.data.map((e)=>e['city']).toList();
-    }).catchError((error) {
-      print(error.toString());
+    instance.collection('cities').get().then((value){
+      cities=[];
+      cities.addAll(value.docs.map((doc)=>doc.data()['name']).toList());
+      emit(ShopGetCitiesSuccessState());
+    }).catchError((error){
+      emit(ShopGetCitiesErrorState(error));
     });
   }
 

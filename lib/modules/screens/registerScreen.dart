@@ -29,144 +29,146 @@ class RegisterScreen extends StatelessWidget {
         child: BlocConsumer<ShopLoginCubit, ShopLoginState>(
           builder: (BuildContext context, state) {
             var cubit = ShopLoginCubit.get(context);
-            return Center(
-              child: Padding(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  //mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Create account',
-                      style: TextStyle(fontSize: 30),
-                    ),
-                    Expanded(
-                      flex: 2,
-                      child: SingleChildScrollView(
-                        child: Form(
-                          key: formKey,
-                          child: Column(
-
-                            children: [
-                              const SizedBox(
-                                height: 50,
-                              ),
-                              defaultFormField(
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return 'Enter your name.';
-                                    }
-                                    return null;
-                                  },
-                                  prefixIcon: const Icon(Icons.account_box),
-                                  label: 'Name',
-                                  controller: name,
-                                  keyboardType: TextInputType.name),
-                              const SizedBox(
-                                height: 30,
-                              ),
-                              defaultFormField(
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return 'Enter your email.';
-                                    }else if(!emailValid.hasMatch(value)){
-                                      return 'Enter a valid email, EX: example@ex.com';
-                                    }
-                                    return null;
-                                  },
-                                  prefixIcon: const Icon(Icons.email),
-                                  label: 'Email',
-                                  controller: email,
-                                  keyboardType: TextInputType.name),
-                              const SizedBox(
-                                height: 30,
-                              ),
-                              defaultFormField(
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return 'Enter your password.';
-                                    }
-                                    return null;
-                                  },
-                                  obscureText: cubit.securedPassword,
-                                  prefixIcon: const Icon(Icons.lock),
-                                  suffixIcon: IconButton(
-                                    onPressed: () {
-                                      cubit.toggleSecurePassword();
+            return SafeArea(
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    //mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Create account',
+                        style: TextStyle(fontSize: 30),
+                      ),
+                      Expanded(
+                        flex: 2,
+                        child: SingleChildScrollView(
+                          child: Form(
+                            key: formKey,
+                            child: Column(
+              
+                              children: [
+                                const SizedBox(
+                                  height: 50,
+                                ),
+                                defaultFormField(
+                                    validator: (value) {
+                                      if (value!.isEmpty) {
+                                        return 'Enter your name.';
+                                      }
+                                      return null;
                                     },
-                                    icon: cubit.securedPassword
-                                        ? const Icon(Icons.visibility)
-                                        : const Icon(Icons.visibility_off),
-                                  ),
-                                  label: 'Password',
-                                  controller: password,
-                                  keyboardType: TextInputType.visiblePassword
-                              ),
-                              const SizedBox(
-                                height: 30,
-                              ),
-                              defaultFormField(
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return 'Enter your confirm password.';
-                                    }else if(value!=password.text){
-                                      return 'The confirm password doesn\'t match.';
-                                    }
-                                    return null;
-                                  },
-                                  obscureText: cubit.securedPassword,
-                                  prefixIcon: const Icon(Icons.lock),
-                                  suffixIcon: IconButton(
-                                    onPressed: () {
-                                      cubit.toggleSecurePassword();
+                                    prefixIcon: const Icon(Icons.account_box),
+                                    label: 'Name',
+                                    controller: name,
+                                    keyboardType: TextInputType.name),
+                                const SizedBox(
+                                  height: 30,
+                                ),
+                                defaultFormField(
+                                    validator: (value) {
+                                      if (value!.isEmpty) {
+                                        return 'Enter your email.';
+                                      }else if(!emailValid.hasMatch(value)){
+                                        return 'Enter a valid email, EX: example@ex.com';
+                                      }
+                                      return null;
                                     },
-                                    icon: cubit.securedPassword
-                                        ? const Icon(Icons.visibility)
-                                        : const Icon(Icons.visibility_off),
-                                  ),
-                                  label: 'Confirm Password',
-                                  controller: confirmPassword,
-                                  keyboardType: TextInputType.visiblePassword
-                              ),
-                              const SizedBox(
-                                height: 30,
-                              ),
-                              ConditionalBuilder(
-                                  condition: state is !ShopRegisterLoadingState,
-                                  builder: (context)=>defaultButton(
-                                      text: 'Register',
+                                    prefixIcon: const Icon(Icons.email),
+                                    label: 'Email',
+                                    controller: email,
+                                    keyboardType: TextInputType.name),
+                                const SizedBox(
+                                  height: 30,
+                                ),
+                                defaultFormField(
+                                    validator: (value) {
+                                      if (value!.isEmpty) {
+                                        return 'Enter your password.';
+                                      }
+                                      return null;
+                                    },
+                                    obscureText: cubit.securedPassword,
+                                    prefixIcon: const Icon(Icons.lock),
+                                    suffixIcon: IconButton(
                                       onPressed: () {
-                                        if (formKey.currentState!.validate()) {
-                                          cubit.register(email: email.text, password: password.text,name: name.text)
-                                              .then((value){
-                                            navigateTo(
-                                                context: context,
-                                                page: LoginScreen()
-                                            );
-                                          })
-                                              .catchError((error){});
-                                        }
-                                      }),
-                                  fallback: (context)=>const CircularProgressIndicator()
-                              ),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Text('Already have an account?'),
-                                  TextButton(
+                                        cubit.toggleSecurePassword();
+                                      },
+                                      icon: cubit.securedPassword
+                                          ? const Icon(Icons.visibility)
+                                          : const Icon(Icons.visibility_off),
+                                    ),
+                                    label: 'Password',
+                                    controller: password,
+                                    keyboardType: TextInputType.visiblePassword
+                                ),
+                                const SizedBox(
+                                  height: 30,
+                                ),
+                                defaultFormField(
+                                    validator: (value) {
+                                      if (value!.isEmpty) {
+                                        return 'Enter your confirm password.';
+                                      }else if(value!=password.text){
+                                        return 'The confirm password doesn\'t match.';
+                                      }
+                                      return null;
+                                    },
+                                    obscureText: cubit.securedPassword,
+                                    prefixIcon: const Icon(Icons.lock),
+                                    suffixIcon: IconButton(
                                       onPressed: () {
-                                        navigateTo(context: context, page: LoginScreen());
-                                      }, child: const Text('Login')),
-                                ],
-                              ),
-                            ],
+                                        cubit.toggleSecurePassword();
+                                      },
+                                      icon: cubit.securedPassword
+                                          ? const Icon(Icons.visibility)
+                                          : const Icon(Icons.visibility_off),
+                                    ),
+                                    label: 'Confirm Password',
+                                    controller: confirmPassword,
+                                    keyboardType: TextInputType.visiblePassword
+                                ),
+                                const SizedBox(
+                                  height: 30,
+                                ),
+                                ConditionalBuilder(
+                                    condition: state is !ShopRegisterLoadingState,
+                                    builder: (context)=>defaultButton(
+                                        text: 'Register',
+                                        onPressed: () {
+                                          if (formKey.currentState!.validate()) {
+                                            cubit.register(email: email.text, password: password.text,name: name.text)
+                                                .then((value){
+                                              navigateTo(
+                                                  context: context,
+                                                  page: LoginScreen()
+                                              );
+                                            })
+                                                .catchError((error){});
+                                          }
+                                        }),
+                                    fallback: (context)=>const CircularProgressIndicator()
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const Text('Already have an account?'),
+                                    TextButton(
+                                        onPressed: () {
+                                          navigateTo(context: context, page: LoginScreen());
+                                        }, child: const Text('Login')),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             );
